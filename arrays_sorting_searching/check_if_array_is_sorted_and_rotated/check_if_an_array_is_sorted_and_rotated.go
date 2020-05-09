@@ -22,7 +22,7 @@ func CheckAscendingOrder(arr []int, lo int, hi int, trueOnError bool) (bool, err
 	if lo > hi {
 		// error
 		err = errors.New(fmt.Sprintf("Invalid range lo=%d < hi=%d; lo can't be greater than hi", lo, hi))
-	} else if (lo < 0) || (len(arr) <= hi) {
+	} else if (lo < 0) || ((len(arr) > 0) && (len(arr) <= hi)) {
 		// error
 		err = errors.New(fmt.Sprintf("Invalid range lo=%d, hi=%d for arr[] of len=%d", lo, hi, len(arr)))
 	}

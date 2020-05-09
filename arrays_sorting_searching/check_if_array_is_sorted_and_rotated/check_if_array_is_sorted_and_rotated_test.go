@@ -5,6 +5,7 @@ import (
 	"math"
 	"strings"
 	"testing"
+	"errors"
 )
 
 func TestFindMinEleIndex(t *testing.T) {
@@ -83,7 +84,7 @@ func TestFindMinEleIndex(t *testing.T) {
 	}
 }
 
-func TestCheckAscendingOrder(t *testing.T) {
+func TestCheckAscendingOrderPassed(t *testing.T) {
 	arrIn := [][]int{
 		// sorted-range
 		[]int{8, 1, 3, 7, 4, 2, 9},
@@ -96,6 +97,8 @@ func TestCheckAscendingOrder(t *testing.T) {
 		// zero-range
 		[]int{8, 1, 3, 7, 4, 2, 9},
 		[]int{8, 1, 3, 7, 4, 2, 9},
+		// empty-array
+		[]int{},
 	}
 	indRangeIn := [][]int{
 		// sorted range
@@ -109,6 +112,8 @@ func TestCheckAscendingOrder(t *testing.T) {
 		// zero-range
 		[]int{1, 1},
 		[]int{5, 5},
+		// empty-array
+		[]int{0, 0},
 	}
 	isAscendingOutExpected := []bool{
 		//sorted range
@@ -121,6 +126,8 @@ func TestCheckAscendingOrder(t *testing.T) {
 		false,
 		// zero range
 		true,
+		true,
+		// empty-array
 		true,
 	}
 
@@ -144,6 +151,99 @@ func TestCheckAscendingOrder(t *testing.T) {
 
 		stringBuilder.WriteString("\t\t")
 		stringBuilder.WriteString(fmt.Sprintf("expected: isAscending=%t, err=nil\t", isAscendingExpected))
+		stringBuilder.WriteString(fmt.Sprintf("computed: isAscending=%t, err=%s\t", isAscendingComputed, errComputed))
+		stringBuilder.WriteString("\n")
+	}
+
+	if allCasesPassed {
+		stringBuilder.WriteString("TestCheckAscendingOrder: All  cases passed\n")
+	} else {
+		stringBuilder.WriteString("TestCheckAscendingOrder: Some cases failed\n")
+	}
+
+	t.Logf(stringBuilder.String())
+	if !allCasesPassed {
+		t.Fail()
+	}
+}
+
+func TestCheckAscendingOrderError(t *testing.T) {
+	arrIn := [][]int{
+		// lo > hi
+		[]int{1, 2, 3},
+		// hi > len(arr)
+		[]int{1, 2, 3},
+		[]int{},
+	}
+	indRangeIn := [][]int{
+		// lo > hi
+		[]int{2, 1},
+		// hi > len(arr)
+		[]int{2, 3},
+		[]int{3, 4},
+	}
+	trueOnErrorIn := []bool {
+		// lo > hi
+		true,
+		// hi > len(arr)
+		false,
+		true,
+	}
+
+	isAscendingOutExpected := []bool{
+		// lo > hi
+		true,
+		// hi > len(arr)
+		false,
+		true,
+	}
+	errorOutExpected := []error {
+		// lo > hi
+		errors.New(fmt.Sprintf("Invalid range lo=2 < hi=1; lo can't be greater than hi")),
+		// hi > len(arr)
+		errors.New(fmt.Sprintf("Invalid range lo=2, hi=3 for arr[] of len=3")),
+		nil,
+	}
+
+	allCasesPassed := true
+	var stringBuilder strings.Builder
+	stringBuilder.WriteString("\n")
+
+	for idx, arr := range arrIn {
+		isAscendingComputed, errComputed := CheckAscendingOrder(arr, indRangeIn[idx][0], indRangeIn[idx][1], trueOnErrorIn[idx])
+		isAscendingExpected := isAscendingOutExpected[idx]
+		errExpected := errorOutExpected[idx]
+		testFailed := false
+
+		if errExpected == nil && errComputed == nil {
+			// no worries
+		} else if errExpected != nil && errComputed != nil {
+			// errors should match
+			if errExpected.Error() != errComputed.Error() {
+				testFailed = true
+			}
+		} else {
+			// guaranteed failure
+			testFailed = true
+		}
+
+		if (isAscendingExpected != isAscendingComputed) {
+			// guaranteed failure
+			testFailed = true
+		}
+
+		if testFailed {
+			allCasesPassed = false
+			stringBuilder.WriteString("[failed]\t")
+		} else {
+			stringBuilder.WriteString("[passed]\t")
+		}
+
+		stringBuilder.WriteString(fmt.Sprintf("Idx=%d\tinput: array=%v\tindRangeIn = (%d, %d)\t", idx, arr, indRangeIn[idx][0], indRangeIn[idx][1]))
+		stringBuilder.WriteString("\n")
+
+		stringBuilder.WriteString("\t\t")
+		stringBuilder.WriteString(fmt.Sprintf("expected: isAscending=%t, err=%s\t", isAscendingExpected, errExpected))
 		stringBuilder.WriteString(fmt.Sprintf("computed: isAscending=%t, err=%s\t", isAscendingComputed, errComputed))
 		stringBuilder.WriteString("\n")
 	}
