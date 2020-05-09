@@ -84,7 +84,7 @@ func TestFindMinEleIndex(t *testing.T) {
 	}
 }
 
-func TestCheckAscendingOrderPassed(t *testing.T) {
+func TestCheckAscendingOrder(t *testing.T) {
 	arrIn := [][]int{
 		// sorted-range
 		[]int{8, 1, 3, 7, 4, 2, 9},
