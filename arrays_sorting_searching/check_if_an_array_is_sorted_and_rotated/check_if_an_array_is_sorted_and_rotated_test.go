@@ -1,4 +1,4 @@
-package check_if_array_is_sorted_and_rotated
+package check_if_an_array_is_sorted_and_rotated
 
 import (
 	"errors"
