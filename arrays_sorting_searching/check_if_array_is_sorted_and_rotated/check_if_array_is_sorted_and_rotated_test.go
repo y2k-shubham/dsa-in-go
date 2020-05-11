@@ -1,11 +1,11 @@
 package check_if_array_is_sorted_and_rotated
 
 import (
+	"errors"
 	"fmt"
 	"math"
 	"strings"
 	"testing"
-	"errors"
 )
 
 func TestFindMinEleIndex(t *testing.T) {
@@ -182,7 +182,7 @@ func TestCheckAscendingOrderError(t *testing.T) {
 		[]int{2, 3},
 		[]int{3, 4},
 	}
-	trueOnErrorIn := []bool {
+	trueOnErrorIn := []bool{
 		// lo > hi
 		true,
 		// hi > len(arr)
@@ -197,7 +197,7 @@ func TestCheckAscendingOrderError(t *testing.T) {
 		false,
 		true,
 	}
-	errorOutExpected := []error {
+	errorOutExpected := []error{
 		// lo > hi
 		errors.New(fmt.Sprintf("Invalid range lo=2 < hi=1; lo can't be greater than hi")),
 		// hi > len(arr)
@@ -227,7 +227,7 @@ func TestCheckAscendingOrderError(t *testing.T) {
 			testFailed = true
 		}
 
-		if (isAscendingExpected != isAscendingComputed) {
+		if isAscendingExpected != isAscendingComputed {
 			// guaranteed failure
 			testFailed = true
 		}
@@ -260,106 +260,81 @@ func TestCheckAscendingOrderError(t *testing.T) {
 	}
 }
 
-//func TestSortedRotatedArray(t *testing.T) {
-//	argsIn := [][]int{
-//		// valid
-//		[]int{2, 1},
-//		[]int{3, 4, 5, 1, 2},
-//		[]int{7, 7, 8, 2, 4, 6, 6, 7},
-//		// invalid
-//		[]int{5, 4, 3},
-//		[]int{1, 1, 5, 4, 9},
-//		[]int{2, 4, 2, 5},
-//	}
-//	isSortedRotatedOutExpected := []bool{
-//		// valid
-//		true,
-//		true,
-//		true,
-//		// invalid
-//		false,
-//		false,
-//		false,
-//	}
-//	pivotIndexOutExpected := []int{
-//		// valid
-//		1,
-//		3,
-//		3,
-//		// invalid
-//		math.MinInt32,
-//		math.MinInt32,
-//		math.MinInt32,
-//	}
-//	allCasesPassed := true
-//	for idx, arg := range argsIn {
-//		isSortedRotatedComputed, pivotIndexComputed := IsSortedRotated(arg)
-//		isSortedRotatedExpected := isSortedRotatedOutExpected[idx]
-//		pivotIndexExpected := pivotIndexOutExpected[idx]
-//		t.Logf(fmt.Sprintf("input: array=%v", arg))
-//		if isSortedRotatedComputed != isSortedRotatedExpected || pivotIndexComputed != pivotIndexExpected {
-//			allCasesPassed = false
-//			t.Logf(fmt.Sprintf("expected: isSortedRotated=%t, pivotyIndex=%d", isSortedRotatedExpected, pivotIndexExpected))
-//			t.Logf(fmt.Sprintf("computed: isSortedRotated=%t, pivotyIndex=%d", isSortedRotatedComputed, pivotIndexComputed))
-//			t.Errorf(fmt.Sprintf("TestSortedRotatedArray: for idx=%d, arr=%v", idx, arg))
-//		} else {
-//			t.Logf(fmt.Sprintf("TestSortedRotatedArray: passed for idx=%d, arr=%v", idx, arg))
-//		}
-//		t.Logf("")
-//	}
-//	if allCasesPassed {
-//		fmt.Println("TestSortedRotatedArray: All cases passed")
-//	}
-//}
-//
-//func TestSortedArray(t *testing.T) {
-//	argsIn := [][]int{
-//		// valid
-//		[]int{1, 1},
-//		[]int{1, 2, 3, 4, 5},
-//		[]int{2, 4, 6, 7, 7, 7, 7, 8},
-//		// invalid
-//		[]int{5, 4, 3},
-//		[]int{4, 9, 1, 1, 5},
-//		[]int{2, 5, 2, 4},
-//	}
-//	isSortedRotatedOutExpected := []bool{
-//		// valid
-//		true,
-//		true,
-//		true,
-//		// invalid
-//		false,
-//		false,
-//		false,
-//	}
-//	pivotIndexOutExpected := []int{
-//		// valid
-//		1,
-//		3,
-//		3,
-//		// invalid
-//		math.MinInt32,
-//		math.MinInt32,
-//		math.MinInt32,
-//	}
-//	allCasesPassed := true
-//	for idx, arg := range argsIn {
-//		isSortedRotatedComputed, pivotIndexComputed := IsSortedRotated(arg)
-//		isSortedRotatedExpected := isSortedRotatedOutExpected[idx]
-//		pivotIndexExpected := pivotIndexOutExpected[idx]
-//		t.Logf(fmt.Sprintf("input: array=%v", arg))
-//		if isSortedRotatedComputed != isSortedRotatedExpected || pivotIndexComputed != pivotIndexExpected {
-//			allCasesPassed = false
-//			t.Logf(fmt.Sprintf("expected: isSortedRotated=%t, pivotyIndex=%d", isSortedRotatedExpected, pivotIndexExpected))
-//			t.Logf(fmt.Sprintf("computed: isSortedRotated=%t, pivotyIndex=%d", isSortedRotatedComputed, pivotIndexComputed))
-//			t.Errorf(fmt.Sprintf("TestSortedRotatedArray: for idx=%d, arr=%v", idx, arg))
-//		} else {
-//			t.Logf(fmt.Sprintf("TestSortedRotatedArray: passed for idx=%d, arr=%v", idx, arg))
-//		}
-//		t.Logf("")
-//	}
-//	if allCasesPassed {
-//		fmt.Println("TestSortedRotatedArray: All cases passed")
-//	}
-//}
+func TestIsSortedRotated(t *testing.T) {
+	argsIn := [][]int{
+		// valid
+		[]int{2, 1},
+		[]int{3, 4, 5, 1, 2},
+		[]int{7, 7, 8, 2, 4, 6, 6, 7},
+		// invalid
+		[]int{1, 2, 3},
+		[]int{5, 4, 3},
+		[]int{1, 1, 5, 4, 9},
+		[]int{2, 4, 2, 5},
+	}
+	isSortedRotatedOutExpected := []bool{
+		// valid
+		true,
+		true,
+		true,
+		// invalid
+		false,
+		false,
+		false,
+		false,
+	}
+	pivotIndexOutExpected := []int{
+		// valid
+		1,
+		3,
+		3,
+		// invalid
+		-1,
+		-1,
+		-1,
+		-1,
+	}
+
+	allCasesPassed := true
+	var stringBuilder strings.Builder
+	stringBuilder.WriteString("\n")
+
+	for idx, arg := range argsIn {
+		isSortedRotatedComputed, pivotIndexComputed := IsSortedRotated(arg)
+		isSortedRotatedExpected := isSortedRotatedOutExpected[idx]
+		pivotIndexExpected := pivotIndexOutExpected[idx]
+		testFailed := false
+
+		if isSortedRotatedExpected != isSortedRotatedComputed {
+			testFailed = true
+		} else if pivotIndexExpected != pivotIndexComputed {
+			testFailed = true
+		}
+
+		if testFailed {
+			allCasesPassed = false
+			stringBuilder.WriteString("[failed]\t")
+		} else {
+			stringBuilder.WriteString("[passed]\t")
+		}
+
+		stringBuilder.WriteString(fmt.Sprintf("Idx=%d\tinput: array=%v\t", idx, arg))
+		stringBuilder.WriteString("\n")
+
+		stringBuilder.WriteString("\t\t")
+		stringBuilder.WriteString(fmt.Sprintf("expected: isSortedRotated=%t, pivotyIndex=%d\t", isSortedRotatedExpected, pivotIndexExpected))
+		stringBuilder.WriteString(fmt.Sprintf("computed: isSortedRotated=%t, pivotyIndex=%d\t", isSortedRotatedComputed, pivotIndexComputed))
+		stringBuilder.WriteString("\n")
+	}
+
+	if allCasesPassed {
+		stringBuilder.WriteString("TestCheckAscendingOrder: All  cases passed\n")
+	} else {
+		stringBuilder.WriteString("TestCheckAscendingOrder: Some cases failed\n")
+	}
+
+	t.Logf(stringBuilder.String())
+	if !allCasesPassed {
+		t.Fail()
+	}
+}
