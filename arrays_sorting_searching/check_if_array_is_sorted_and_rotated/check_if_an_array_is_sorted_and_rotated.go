@@ -1,3 +1,4 @@
+// https://www.geeksforgeeks.org/check-if-an-array-is-sorted-and-rotated/
 package check_if_array_is_sorted_and_rotated
 
 import (
