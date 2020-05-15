@@ -36,9 +36,9 @@ func Partition(arr []int, lo int, hi int) int {
 func QuickSelect(k int, arr []int, lo int, hi int) (int, error) {
 	if lo > hi {
 		return math.MinInt32, errors.New(fmt.Sprintf("lo=%d can't exceed hi=%d", lo, hi))
-	} else if k - 1 < lo {
+	} else if k-1 < lo {
 		return math.MinInt32, errors.New(fmt.Sprintf("k-1=%d can't be less than lo=%d", k-1, lo))
-	} else if k - 1 > hi {
+	} else if k-1 > hi {
 		return math.MinInt32, errors.New(fmt.Sprintf("k-1=%d can't exceed hi=%d", k-1, hi))
 	} else {
 		pivotInd := Partition(arr, lo, hi)
