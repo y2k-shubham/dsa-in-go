@@ -98,6 +98,7 @@ func TestQuickSelect(t *testing.T) {
 		{arr: []int{8, 1, 3, 7, 4, 2, 9}, k: 5},
 		{arr: []int{8, 1, 3, 7, 4, 2, 9}, k: 6},
 		{arr: []int{8, 1, 3, 7, 4, 2, 9}, k: 7},
+		{arr: []int{8}, k: 1},
 	}
 	argsOutExpected := []int{
 		1,
@@ -107,6 +108,7 @@ func TestQuickSelect(t *testing.T) {
 		7,
 		8,
 		9,
+		8,
 	}
 	for idx, arg := range argsIn {
 		kthSmallestOutExpected := argsOutExpected[idx]
@@ -116,3 +118,5 @@ func TestQuickSelect(t *testing.T) {
 		assert.Nil(t, errOutComputed, "Error at idx=%d is not nil", idx)
 	}
 }
+
+
