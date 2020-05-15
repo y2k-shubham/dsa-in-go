@@ -116,7 +116,7 @@ func TestQuickSelect(t *testing.T) {
 		kthSmallestOutComputed, errOutComputed := QuickSelect(arg.k, arg.arr, 0, (len(arg.arr) - 1))
 
 		assert.Equal(t, kthSmallestOutExpected, kthSmallestOutComputed, "Outputs at idx=%d mismatch\narr=%v\tk=%d", idx, arg.arr, arg.k)
-		assert.Nil(t, errOutComputed, "Error at idx=%d is not nil", idx)
+		assert.NoError(t, errOutComputed, "Error at idx=%d is not nil", idx)
 	}
 }
 
