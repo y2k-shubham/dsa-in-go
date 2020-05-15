@@ -84,3 +84,35 @@ func TestPartition(t *testing.T) {
 		assert.Equal(t, pivotIndOutExpected, pivotIndOutComputed, "Pivot at idx=%d mismatches\narr=%v\ni=%d\tj=%d", idx, arg.arr, arg.lo, arg.hi)
 	}
 }
+
+func TestQuickSelect(t *testing.T) {
+	type Input struct {
+		arr []int
+		k   int
+	}
+	argsIn := []Input{
+		{arr: []int{8, 1, 3, 7, 4, 2, 9}, k: 1},
+		{arr: []int{8, 1, 3, 7, 4, 2, 9}, k: 2},
+		{arr: []int{8, 1, 3, 7, 4, 2, 9}, k: 3},
+		{arr: []int{8, 1, 3, 7, 4, 2, 9}, k: 4},
+		{arr: []int{8, 1, 3, 7, 4, 2, 9}, k: 5},
+		{arr: []int{8, 1, 3, 7, 4, 2, 9}, k: 6},
+		{arr: []int{8, 1, 3, 7, 4, 2, 9}, k: 7},
+	}
+	argsOutExpected := []int{
+		1,
+		2,
+		3,
+		4,
+		7,
+		8,
+		9,
+	}
+	for idx, arg := range argsIn {
+		kthSmallestOutExpected := argsOutExpected[idx]
+		kthSmallestOutComputed, errOutComputed := QuickSelect(arg.k, arg.arr, 0, (len(arg.arr) - 1))
+
+		assert.Equal(t, kthSmallestOutExpected, kthSmallestOutComputed, "Outputs at idx=%d mismatch\narr=%v\tk=%d", idx, arg.arr, arg.k)
+		assert.Nil(t, errOutComputed, "Error at idx=%d is not nil", idx)
+	}
+}
