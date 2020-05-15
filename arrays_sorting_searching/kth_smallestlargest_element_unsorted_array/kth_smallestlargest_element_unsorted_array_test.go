@@ -2,6 +2,7 @@ package kth_smallestlargest_element_unsorted_array
 
 import (
 	"github.com/stretchr/testify/assert"
+	"math"
 	"testing"
 )
 
@@ -119,4 +120,27 @@ func TestQuickSelect(t *testing.T) {
 	}
 }
 
+func TestQuickSelectError(t *testing.T) {
+	type Input struct {
+		arr []int
+		k   int
+	}
+	argsIn := []Input{
+		{arr: []int{8, 1, 3, 7, 4, 2, 9}, k: -1},
+		{arr: []int{8, 1, 3, 7, 4, 2, 9}, k: 0},
+		{arr: []int{8, 1, 3, 7, 4, 2, 9}, k: 8},
+		{arr: []int{8, 1, 3, 7, 4, 2, 9}, k: 9},
+	}
+	errMsgOutExpected := []string{
+		"k-1=-2 can't be less than lo=0",
+		"k-1=-1 can't be less than lo=0",
+		"k-1=7 can't exceed hi=6",
+		"k-1=8 can't exceed hi=6",
+	}
+	for idx, arg := range argsIn {
+		kthSmallestOutComputed, errOutComputed := QuickSelect(arg.k, arg.arr, 0, (len(arg.arr) - 1))
 
+		assert.Equal(t, math.MinInt32, kthSmallestOutComputed, "Outputs at idx=%d mismatch\narr=%v\tk=%d", idx, arg.arr, arg.k)
+		assert.EqualError(t, errOutComputed, errMsgOutExpected[idx], "Errors at idx=%d mismatch\narr=%v\tk=%d", idx, arg.arr, arg.k)
+	}
+}
