@@ -19,6 +19,7 @@ func TestSwap(t *testing.T) {
 		{arr: []int{8, 1, 3, 7, 4, 2, 9}, i: 1, j: 6},
 		{arr: []int{8, 1, 3, 7, 4, 2, 9}, i: 3, j: 4},
 		{arr: []int{8, 1, 3, 7, 4, 2, 9}, i: 6, j: 6},
+		{arr: []int{8}, i: 0, j: 0},
 	}
 	argsOutExpected := [][]int{
 		[]int{8, 1, 3, 7, 4, 2, 9},
@@ -28,6 +29,7 @@ func TestSwap(t *testing.T) {
 		[]int{8, 9, 3, 7, 4, 2, 1},
 		[]int{8, 1, 3, 4, 7, 2, 9},
 		[]int{8, 1, 3, 7, 4, 2, 9},
+		[]int{8},
 	}
 	for idx, arg := range argsIn {
 		argOutExpected := argsOutExpected[idx]
@@ -54,6 +56,7 @@ func TestPartition(t *testing.T) {
 		{arr: []int{8, 1, 3, 7, 4, 2, 9}, lo: 4, hi: 4},
 		{arr: []int{8, 1, 3, 7, 4, 2, 9}, lo: 5, hi: 6},
 		{arr: []int{8, 1, 3, 7, 4, 2, 9}, lo: 6, hi: 6},
+		{arr: []int{8}, lo: 0, hi: 0},
 	}
 	type Output struct {
 		arr      []int
@@ -68,6 +71,7 @@ func TestPartition(t *testing.T) {
 		{arr: []int{8, 1, 3, 7, 4, 2, 9}, pivotInd: 4},
 		{arr: []int{8, 1, 3, 7, 4, 2, 9}, pivotInd: 6},
 		{arr: []int{8, 1, 3, 7, 4, 2, 9}, pivotInd: 6},
+		{arr: []int{8}, pivotInd: 0},
 	}
 	for idx, arg := range argsIn {
 		arrOutExpected := argsOutExpected[idx].arr
