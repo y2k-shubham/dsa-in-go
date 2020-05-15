@@ -13,16 +13,16 @@ func Partition(arr []int, lo int, hi int) int {
 	pivotInd := hi
 	pivot := arr[hi]
 
-	j := lo
+	j := lo - 1
 	for i := lo; i < pivotInd; i++ {
 		if arr[i] <= pivot {
-			Swap(arr, j, i)
 			j++
+			Swap(arr, j, i)
 		}
 	}
 
-	Swap(arr, j, pivotInd)
 	j++
+	Swap(arr, j, pivotInd)
 
 	return j
 }
