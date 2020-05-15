@@ -42,18 +42,18 @@ func TestSwap(t *testing.T) {
 func TestPartition(t *testing.T) {
 	type Input struct {
 		arr []int
-		i   int
-		j   int
+		lo  int
+		hi  int
 	}
 	argsIn := []Input{
-		{arr: []int{8, 1, 3, 7, 4, 2, 9}, i: 0, j: 0},
-		{arr: []int{8, 1, 3, 7, 4, 2, 9}, i: 0, j: 1},
-		{arr: []int{8, 1, 3, 7, 4, 2, 9}, i: 0, j: 3},
-		{arr: []int{8, 1, 3, 7, 4, 2, 9}, i: 2, j: 3},
-		{arr: []int{8, 1, 3, 7, 4, 2, 9}, i: 4, j: 6},
-		{arr: []int{8, 1, 3, 7, 4, 2, 9}, i: 4, j: 4},
-		{arr: []int{8, 1, 3, 7, 4, 2, 9}, i: 5, j: 6},
-		{arr: []int{8, 1, 3, 7, 4, 2, 9}, i: 6, j: 6},
+		{arr: []int{8, 1, 3, 7, 4, 2, 9}, lo: 0, hi: 0},
+		{arr: []int{8, 1, 3, 7, 4, 2, 9}, lo: 0, hi: 1},
+		{arr: []int{8, 1, 3, 7, 4, 2, 9}, lo: 0, hi: 3},
+		{arr: []int{8, 1, 3, 7, 4, 2, 9}, lo: 2, hi: 3},
+		{arr: []int{8, 1, 3, 7, 4, 2, 9}, lo: 4, hi: 6},
+		{arr: []int{8, 1, 3, 7, 4, 2, 9}, lo: 4, hi: 4},
+		{arr: []int{8, 1, 3, 7, 4, 2, 9}, lo: 5, hi: 6},
+		{arr: []int{8, 1, 3, 7, 4, 2, 9}, lo: 6, hi: 6},
 	}
 	type Output struct {
 		arr      []int
@@ -73,10 +73,10 @@ func TestPartition(t *testing.T) {
 		arrOutExpected := argsOutExpected[idx].arr
 		pivotIndOutExpected := argsOutExpected[idx].pivotInd
 
-		pivotIndOutComputed := Partition(arg.arr, arg.i, arg.j)
+		pivotIndOutComputed := Partition(arg.arr, arg.lo, arg.hi)
 		arrOutComputed := arg.arr
 
-		assert.Equal(t, arrOutExpected, arrOutComputed, "Array at idx=%d mismatches\narr=%v\ni=%d\tj=%d", idx, arg.arr, arg.i, arg.j)
-		assert.Equal(t, pivotIndOutExpected, pivotIndOutComputed, "Pivot at idx=%d mismatches\narr=%v\ni=%d\tj=%d", idx, arg.arr, arg.i, arg.j)
+		assert.Equal(t, arrOutExpected, arrOutComputed, "Array at idx=%d mismatches\narr=%v\ni=%d\tj=%d", idx, arg.arr, arg.lo, arg.hi)
+		assert.Equal(t, pivotIndOutExpected, pivotIndOutComputed, "Pivot at idx=%d mismatches\narr=%v\ni=%d\tj=%d", idx, arg.arr, arg.lo, arg.hi)
 	}
 }
